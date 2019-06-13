@@ -29,7 +29,7 @@ def mainMenu():
 			PlayerIG = pickle.load(open(nameOfFile, "rb"))
 			print("Loaded saved state...")
 			option = input(" ")
-			continueGame()
+			continueGame(PlayerIG)
 		else:
 			print("There is not a save file named that!")
 			option = input(" ")
@@ -87,7 +87,7 @@ def continueGame(player):
 		drinkPotion(player)
 		continueGame(player)
 	elif option == "3":
-		store()
+		store(player)
 	elif option == "4":
 		pickle.dump(player, open(player.name, "wb"))
 		print("\nGame has been saved!\n")
@@ -287,7 +287,7 @@ def fight(enemy, player):
 	elif option == "2":
 		scrollAttack(enemy, player)
 	elif option == "3":
-		drinkPotion()
+		drinkPotion(player)
 		fight(enemy, player)
 	elif option == "4":
 		run(enemy, player)
@@ -323,7 +323,7 @@ def scrollAttack(enemy, player):
 	if player.scroll == 0:
 		print("You don't have any scrolls left!")
 		option = input(" ")
-		Fight()
+		fight(enemy, player)
 	else:
 		print(("You read the scroll conjuring forth a fireball blasting the %s!!!") % (enemy.name))
 		enemy.currentHealth -= player.scrollAttack
@@ -410,7 +410,7 @@ def store(player):
 			option = input(" ")
 			player.potion += 1
 			player.gold -= 30
-		store()
+		store(player)
 	elif option == "2":
 		if player.gold < 50:
 			print("Sorry you dont have enough for a scroll.")
@@ -423,7 +423,7 @@ def store(player):
 			option = input(" ")
 			player.scroll += 1
 			player.gold -= 50
-		store()
+		store(player)
 	elif option == "3":
 		print("Alrighty! have a nice day!")
 		option = input(" ")
